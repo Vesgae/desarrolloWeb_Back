@@ -14,29 +14,29 @@ import java.util.List;
 public class BookController {
     @Autowired
     private BookService bookService;
-    @GetMapping("/Books")
+    @GetMapping("/books")
     public ResponseEntity<List<Book>> getBooks(){
         List<Book> Books = bookService.getBooks();
         return new ResponseEntity<List<Book>>(Books, HttpStatus.OK);
     }
-    @GetMapping("Books/{id}")
+    @GetMapping("books/{id}")
     public ResponseEntity<Book> getBook(@PathVariable Long id){
         Book currentBook = bookService.getBook(id).get();
         return new ResponseEntity<Book>(currentBook, HttpStatus.OK);
     }
-    @DeleteMapping("/Books")
+    @DeleteMapping("/books")
     public ResponseEntity<?> deleteBook(@RequestParam Long id){
         if (!bookService.existsByIdBook(id))
             return new ResponseEntity(new Mensaje("No existe el Libro"), HttpStatus.NOT_FOUND);
         bookService.deleteBook(id);
         return new ResponseEntity(new Mensaje("Libro eliminado"), HttpStatus.OK);
     }
-    @PostMapping("/Books")
+    @PostMapping("/books")
     public ResponseEntity<?> saveBook(@RequestBody Book book){
         bookService.saveBook(book);
         return new ResponseEntity(new Mensaje("Libro Creado"), HttpStatus.OK);
     }
-    @PutMapping("/Books/{id}")
+    @PutMapping("/books/{id}")
     public ResponseEntity updateBook(@PathVariable Long id, @RequestBody Book book){
         Book currentBook = bookService.getBook(id).get();
         currentBook.setAuthor(book.getAuthor());
